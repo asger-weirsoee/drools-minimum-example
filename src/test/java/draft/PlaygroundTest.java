@@ -1,6 +1,7 @@
 package draft;
 
 import org.droolsassert.DroolsAssert;
+import org.droolsassert.DroolsSession;
 import org.droolsassert.TestRules;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -11,6 +12,9 @@ import org.kie.api.command.KieCommands;
 import java.util.ArrayList;
 import java.util.List;
 
+@DroolsSession(resources = "draft/droolsObjectExample.xlsx",
+        builderProperties = "drools.dump.dir = target/dump",
+        showStateTransitionPopup = true)
 public class PlaygroundTest extends DroolsAssert {
 
     @RegisterExtension
@@ -33,5 +37,10 @@ public class PlaygroundTest extends DroolsAssert {
         }
 
         commands.forEach(c -> getSession().execute(c));
+    }
+    @Test
+    void whenTestCase1_thenPrintTest1_1() {
+        // Print out a test message
+        System.out.println("Test 1.1");
     }
 }
