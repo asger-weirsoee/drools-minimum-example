@@ -1,0 +1,12 @@
+package com.company.rules.droolsObjectValidation;
+//generated from Decision Table
+import com.company.model.InputObject;
+import com.company.model.DateUtil;
+// rule values at A9, header at A4
+rule "Check_Date"
+	when
+		animal : InputObject(input.getDate() < 1/1/22)
+	then
+		System.out.println("ErrorCode123, ErrorText321, Check_Date");
+end
+

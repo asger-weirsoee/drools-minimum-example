@@ -1,6 +1,7 @@
 package com.company.rules;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.droolsassert.DroolsAssert;
@@ -23,31 +24,18 @@ public class InputObjectTest extends DroolsAssert {
 	public DroolsAssert droolsAssert = this;
 	
 	@Test
-	@TestRules(expectedCount = { "1", "Check_DyrAlder" })
+	@TestRules(expected = {"check_Date"})
 	public void testInputObjectExample() {
 		KieCommands commandFactory = KieServices.get().getCommands();
 		List<Command<?>> commands = new ArrayList<>();
 		
-		for (int i = 0; i < 10; i++) {
-			InputObject inputObject = new InputObject();
-			inputObject.setRuleSet("set" + i);
-			inputObject.addInput("DyrAlder", i);
-			
-			commands.add(commandFactory.newInsert(inputObject, "ValRes"));
-			commands.add(commandFactory.newFireAllRules());
-		}
-		
+		InputObject inputObject = new InputObject();
+		inputObject.setDate(new Date());
+
+		commands.add(commandFactory.newInsert(inputObject, "ValRes"));
+		commands.add(commandFactory.newFireAllRules());
+
 		commands.forEach(c -> getSession().execute(c));
 	}
-	
-	@Test
-	@TestRules(expectedCount = { "1", "Check_DyrAlder" })
-	public void testInputObjectExample2() {
-		for (int i = 0; i < 10; i++) {
-			InputObject inputObject = new InputObject();
-			inputObject.setRuleSet("set" + i);
-			inputObject.addInput("DyrAlder", i);
-			insertAndFire(inputObject);
-		}
-	}
+
 }
